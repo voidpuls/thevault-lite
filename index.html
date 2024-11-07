@@ -1,84 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculator</title>
-  <style>
-    body { background-color: #000000; color: #ffffff; text-align: center; }
-    table { border: 1px solid black; margin-left: auto; margin-right: auto; }
-    input[type="button"] { width: 100%; padding: 20px 40px; background-color: #ffffff; color: #000000; font-size: 24px; font-weight: bold; border: none; border-radius: 5px; }
-    input[type="text"] { padding: 20px 30px; font-size: 24px; font-weight: bold; border: none; border-radius: 5px; border: 2px solid black; }
-  </style>
-</head>
-<body>
-
-<h1>Calculator</h1>
-<table id="calcu">
-  <tr>
-    <td colspan="3"><input type="text" id="result"></td>
-    <td><input type="button" value="c" onclick="clr()"></td>
-  </tr>
-  <tr>
-    <td><input type="button" value="1" onclick="dis('1')"></td>
-    <td><input type="button" value="2" onclick="dis('2')"></td>
-    <td><input type="button" value="3" onclick="dis('3')"></td>
-    <td><input type="button" value="/" onclick="dis('/')"></td>
-  </tr>
-  <tr>
-    <td><input type="button" value="4" onclick="dis('4')"></td>
-    <td><input type="button" value="5" onclick="dis('5')"></td>
-    <td><input type="button" value="6" onclick="dis('6')"></td>
-    <td><input type="button" value="*" onclick="dis('*')"></td>
-  </tr>
-  <tr>
-    <td><input type="button" value="7" onclick="dis('7')"></td>
-    <td><input type="button" value="8" onclick="dis('8')"></td>
-    <td><input type="button" value="9" onclick="dis('9')"></td>
-    <td><input type="button" value="-" onclick="dis('-')"></td>
-  </tr>
-  <tr>
-    <td><input type="button" value="0" onclick="dis('0')"></td>
-    <td><input type="button" value="." onclick="dis('.')"></td>
-    <td><input type="button" value="=" onclick="checkPassword()"></td>
-    <td><input type="button" value="+" onclick="dis('+')"></td>
-  </tr>
-</table>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
-<script>
-  const password = "674669"; // Set the desired password here
-
-  function dis(val) {
-    document.getElementById("result").value += val;
-  }
-
-  function clr() {
-    document.getElementById("result").value = "";
-  }
-
-  function checkPassword() {
-    const input = document.getElementById("result").value;
-    if (input === password) {
-      window.location.href = "games.html"; // Redirects to games.html if password is correct
-    } else {
-      try {
-        // If not password, evaluate as a math expression
-        document.getElementById("result").value = math.evaluate(input);
-      } catch (error) {
-        document.getElementById("result").value = "Error";
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="calculator">
+        <input type="text" id="display" class="form-control mb-2" disabled />
+        <div class="row">
+          <div class="col-3">
+            <button class="btn btn-danger btn-clear btn-block mb-2" onclick="clearDisplay()">AC</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-success btn-block mb-2" onclick="calculate()">=</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-success btn-block mb-2" onclick="backspace()">⌫</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-block mb-2" onclick="appendToDisplay('/')">÷</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('7')">7</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('8')">8</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('9')">9</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-block mb-2" onclick="appendToDisplay('*')">×</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('4')">4</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('5')">5</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('6')">6</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-block mb-2" onclick="appendToDisplay('-')">−</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('1')">1</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('2')">2</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('3')">3</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-block mb-2" onclick="appendToDisplay('+')">+</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('0')">0</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('00')">00</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-secondary btn-block mb-2" onclick="appendToDisplay('.')">.</button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn-primary btn-block mb-2" onclick="appendToDisplay('%')">%</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      // Append numbers and operators to display
+      function appendToDisplay(value) {
+        document.getElementById("display").value += value;
       }
-    }
-  }
 
-  // Listen for Enter key press to trigger password check
-  document.getElementById("calcu").onkeyup = function (event) {
-    if (event.key === "Enter") {
-      checkPassword();
-    }
-  }
-</script>
-<p style="color: #181a1f;">Password: 674669</p>
+      // Clear the display
+      function clearDisplay() {
+        document.getElementById("display").value = "";
+      }
 
-</body>
+      // Remove the last character
+      function backspace() {
+        let display = document.getElementById("display");
+        display.value = display.value.slice(0, -1);
+      }
+
+      // Calculate or redirect if the password is entered
+      function calculate() {
+        let display = document.getElementById("display");
+        if (display.value === "674669") {
+          window.location.href = "games.html";
+        } else {
+          try {
+            display.value = eval(display.value);
+          } catch (e) {
+            display.value = "Error";
+          }
+        }
+      }
+    </script>
+  </body>
 </html>
